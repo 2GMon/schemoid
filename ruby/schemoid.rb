@@ -22,9 +22,8 @@ class Schemoid
       end
     else
       if expression[0] == :lambda
-        parameters = expression[1]
-        body = expression[2]
-        result = [:closure, parameters, body, environment]
+        closure = eval_lambda(expression, environment)
+        result = closure
       elsif expression[0] == :let
         lambda_expression = eval_let(expression, environment)
         result = eval(lambda_expression, environment)

@@ -9,6 +9,12 @@ describe "SchemoidEval" do
     @schemoid_eval = SchemoidEvalTest.new
   end
 
+  it "eval_lambdaはclosureを返す" do
+    @schemoid_eval.eval_lambda(
+      [:lambda, [:x], [:+, :x, 1]], []
+    ).should eq([:closure, [:x], [:+, :x, 1], []])
+  end
+
   it "eval_letはlambdaを返す" do
     @schemoid_eval.eval_let(
       [:let, [[:x, 3], [:y, 2]], [:+, :x, :y]], []
