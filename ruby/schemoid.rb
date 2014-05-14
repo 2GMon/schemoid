@@ -27,6 +27,14 @@ class Schemoid
       elsif expression[0] == :let
         lambda_expression = eval_let(expression, environment)
         result = eval(lambda_expression, environment)
+      elsif expression[0] == :if
+        condition = eval(expression[1], environment)
+        if condition
+          new_expression = expression[2]
+        else
+          new_expression = expression[3]
+        end
+        result = eval(new_expression, environment)
       else
         function  = eval(car(expression), environment)
         arguments = cdr(expression).map{|exp| eval(exp, environment)}

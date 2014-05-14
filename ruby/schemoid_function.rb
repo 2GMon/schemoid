@@ -4,5 +4,11 @@ module SchemoidFunction
     :- => ->(*arguments){arguments[1..-1].reduce(arguments[0]){|sub, n| sub -= n}},
     :* => ->(*arguments){arguments.reduce(1){|prod, n| prod *= n}},
     :/ => ->(*arguments){arguments[1..-1].reduce(arguments[0]){|div, n| div /= n}},
+    :> => ->(a, b){a > b},
+    :>= => ->(a, b){a >= b},
+    :< => ->(a, b){a < b},
+    :<= => ->(a, b){a <= b},
+    :== => ->(a, b){a == b},
+    :!= => ->(a, b){a != b},
   }
 end

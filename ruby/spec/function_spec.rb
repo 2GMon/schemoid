@@ -29,4 +29,66 @@ describe "組み込み関数" do
     @schemoid_function.apply(:/, [8, 3, 1]).should eq(2)
     @schemoid_function.apply(:/, [8, -4, -1]).should eq(2)
   end
+
+  it ">は左辺の方が右辺より大きい時にtrueを返す" do
+    @schemoid_function.apply(:>, [2, 1]).should eq(true)
+    @schemoid_function.apply(:>, ["b", "a"]).should eq(true)
+  end
+
+  it ">は左辺の方が右辺より大きくない時にfalseを返す" do
+    @schemoid_function.apply(:>, [-1, 1]).should eq(false)
+    @schemoid_function.apply(:>, [1, 1]).should eq(false)
+    @schemoid_function.apply(:>, ["A", "x"]).should eq(false)
+  end
+
+  it ">=は左辺のが右辺以上の時にtrueを返す" do
+    @schemoid_function.apply(:>=, [2, 1]).should eq(true)
+    @schemoid_function.apply(:>=, [3, 3]).should eq(true)
+  end
+
+  it ">=は左辺の方が右辺より小さい時にfalseを返す" do
+    @schemoid_function.apply(:>=, [-1, 1]).should eq(false)
+    @schemoid_function.apply(:>=, ["A", "x"]).should eq(false)
+  end
+
+  it "<は左辺の方が右辺より小さい時にtrueを返す" do
+    @schemoid_function.apply(:<, [1, 3]).should eq(true)
+    @schemoid_function.apply(:<, ["a", "d"]).should eq(true)
+  end
+
+  it "<は左辺の方が右辺より小さくない時にfalseを返す" do
+    @schemoid_function.apply(:<, [1, 1]).should eq(false)
+    @schemoid_function.apply(:<, [1, 0]).should eq(false)
+    @schemoid_function.apply(:<, ["t", "a"]).should eq(false)
+  end
+
+  it "<=は左辺のが右辺以下の時にtrueを返す" do
+    @schemoid_function.apply(:<=, [1, 1]).should eq(true)
+    @schemoid_function.apply(:<=, [2, 3]).should eq(true)
+  end
+
+  it "<=は左辺の方が右辺より大きい時にfalseを返す" do
+    @schemoid_function.apply(:<=, [1, 0]).should eq(false)
+    @schemoid_function.apply(:<=, ["x", "a"]).should eq(false)
+  end
+
+  it "==は左辺と右辺が等しい時にtrueを返す" do
+    @schemoid_function.apply(:==, [1, 1]).should eq(true)
+    @schemoid_function.apply(:==, ["a", "a"]).should eq(true)
+  end
+
+  it "==は左辺と右辺が異なる時にfalseを返す" do
+    @schemoid_function.apply(:==, [1, 0]).should eq(false)
+    @schemoid_function.apply(:==, ["x", "a"]).should eq(false)
+  end
+
+  it "!=は左辺と右辺が異なる時にtrueを返す" do
+    @schemoid_function.apply(:!=, [0, 1]).should eq(true)
+    @schemoid_function.apply(:!=, ["A", "a"]).should eq(true)
+  end
+
+  it "!=は左辺と右辺が等しい時にfalseを返す" do
+    @schemoid_function.apply(:!=, [1, 1]).should eq(false)
+    @schemoid_function.apply(:!=, ["a", "a"]).should eq(false)
+  end
 end
