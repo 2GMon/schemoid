@@ -7,11 +7,13 @@ describe "Schemoid#evalが" do
 
   it "引数にimmediate_valueを与えられて呼び出された時、引数を返す" do
     @schemoid.eval(1).should eq(1)
-    @schemoid.eval(:+).should eq(:+)
+    @schemoid.eval("a").should eq("a")
   end
 
   it "引数にリストを与えられて呼び出された時、リストを評価・適応した結果を返す" do
     @schemoid.eval([:+, 1, 2]).should eq(3)
     @schemoid.eval([:+, [:/, [:*, 1, 1, 2], [:-, 4, 2]], 1]).should eq(2)
+    @schemoid.eval([[:lambda, [:x], [:+, :x, 1]], 2]).should eq(3)
+    @schemoid.eval([[:lambda, [:x], [:+, :x, [[:lambda, [:x], :x], 2]]], 3]).should eq(5)
   end
 end
