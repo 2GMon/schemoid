@@ -15,5 +15,6 @@ describe "Schemoid#evalが" do
     @schemoid.eval([:+, [:/, [:*, 1, 1, 2], [:-, 4, 2]], 1]).should eq(2)
     @schemoid.eval([[:lambda, [:x], [:+, :x, 1]], 2]).should eq(3)
     @schemoid.eval([[:lambda, [:x], [:+, :x, [[:lambda, [:x], :x], 2]]], 3]).should eq(5)
+    @schemoid.eval([:let, [[:x, 3], [:y, 2]], [:+, :x, :y]]).should eq(5)
   end
 end

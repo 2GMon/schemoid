@@ -2,12 +2,14 @@ require_relative 'schemoid_type'
 require_relative 'schemoid_list'
 require_relative 'schemoid_function'
 require_relative 'schemoid_environment'
+require_relative 'schemoid_eval'
 
 class Schemoid
   include SchemoidType
   include SchemoidList
   include SchemoidFunction
   include SchemoidEnvironment
+  include SchemoidEval
 
   def eval(expression, environment = [])
     if !list?(expression)
@@ -23,6 +25,9 @@ class Schemoid
         parameters = expression[1]
         body = expression[2]
         result = [:closure, parameters, body, environment]
+      elsif expression[0] == :let
+        lambda_expression = eval_let(expression, environment)
+        result = eval(lambda_expression, environment)
       else
         function  = eval(car(expression), environment)
         arguments = cdr(expression).map{|exp| eval(exp, environment)}
