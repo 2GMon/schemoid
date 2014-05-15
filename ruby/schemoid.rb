@@ -77,4 +77,13 @@ class Schemoid
       eval(body, new_environment)
     end
   end
+
+  def parse(expression)
+    program = expression.strip().
+      gsub(/[a-zA-Z\+\-\*><=][0-9a-zA-Z\+\-=!*]*/, ':\\0').
+      gsub(/\s+/, ',').
+      gsub(/\(/, '[').
+      gsub(/\)/, ']')
+    Kernel.eval(program)
+  end
 end

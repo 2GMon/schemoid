@@ -67,4 +67,9 @@ describe "Schemoid#evalが" do
                   ])
     schemoid.eval([:letrec, [[:fact, [:lambda, [:n], [:if, [:<, :n, 3], 0, [:+, [:three_or_five, :n], [:fact, [:-, :n, 1]]]]]]], [:fact, 9]]).should eq(23)
   end
+
+  it "parseによってSchemeのように書ける" do
+    @schemoid.eval(@schemoid.parse('(+ 1 2)')).should eq(3)
+    @schemoid.eval(@schemoid.parse('((lambda (x) (+ x 1)) 2)')).should eq(3)
+  end
 end
