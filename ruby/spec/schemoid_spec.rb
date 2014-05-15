@@ -37,5 +37,18 @@ describe "Schemoid#evalが" do
     schemoid.eval([:id, 3]).should eq(6)
     schemoid.eval([:define, [:id2, :x], [:*, :x, :x]])
     schemoid.eval([:id2, 2]).should eq(4)
+
+    schemoid = Schemoid.new
+    schemoid.eval([:define, [:three_or_five, :n], [:if, [:==, 0, [:%, :n, 3]], :n, [:if, [:==, 0, [:%, :n, 5]], :n, 0]]])
+    schemoid.eval([:three_or_five, 2]).should eq(0)
+    schemoid.eval([:three_or_five, 3]).should eq(3)
+    schemoid.eval([:three_or_five, 4]).should eq(0)
+    schemoid.eval([:three_or_five, 5]).should eq(5)
+    schemoid.eval([:three_or_five, 6]).should eq(6)
+    schemoid.eval([:three_or_five, 7]).should eq(0)
+    schemoid.eval([:three_or_five, 8]).should eq(0)
+    schemoid.eval([:three_or_five, 9]).should eq(9)
+    schemoid.eval([:three_or_five, 10]).should eq(10)
+    schemoid.eval([:letrec, [[:fact, [:lambda, [:n], [:if, [:<, :n, 3], 0, [:+, [:three_or_five, :n], [:fact, [:-, :n, 1]]]]]]], [:fact, 999]]).should eq(233168)
   end
 end
