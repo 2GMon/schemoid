@@ -17,7 +17,7 @@ describe "SchemoidEval" do
 
   it "eval_letはlambdaを返す" do
     @schemoid_eval.eval_let(
-      [:let, [[:x, 3], [:y, 2]], [:+, :x, :y]], []
+      [:let, [[:x, 3], [:y, 2]], [:+, :x, :y]]
     ).should eq([[:lambda, [:x, :y], [:+, :x, :y]], 3, 2])
   end
 end

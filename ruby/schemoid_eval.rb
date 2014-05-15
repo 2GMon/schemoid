@@ -5,7 +5,7 @@ module SchemoidEval
     [:closure, parameters, body, environment]
   end
 
-  def eval_let(expression, environment)
+  def eval_let(expression)
     parameters = expression[1].map{|e| e[0]}
     arguments  = expression[1].map{|e| e[1]}
     body       = expression[2]

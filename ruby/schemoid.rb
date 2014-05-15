@@ -25,7 +25,7 @@ class Schemoid
         closure = eval_lambda(expression, environment)
         result = closure
       elsif expression[0] == :let
-        lambda_expression = eval_let(expression, environment)
+        lambda_expression = eval_let(expression)
         result = eval(lambda_expression, environment)
       elsif expression[0] == :if
         condition = eval(expression[1], environment)
