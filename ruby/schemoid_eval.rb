@@ -27,6 +27,20 @@ module SchemoidEval
     [lambda_expression, new_environment]
   end
 
+  def eval_cond(expression)
+    if expression == []
+      ''
+    else
+      e = expression[0]
+      p = e[0]
+      c = e[1]
+      if p == :else
+        p = :true
+      end
+      [:if, p, c, eval_cond(expression[1..-1])]
+    end
+  end
+
   private
   def let_to_parameters_arguments_body(expression)
     [expression[1].map{|e| e[0]}, expression[1].map{|e| e[1]}, expression[2]]

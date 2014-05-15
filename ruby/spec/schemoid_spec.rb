@@ -29,6 +29,12 @@ describe "Schemoid#evalが" do
        [[:fact,
          [:lambda, [:n], [:if, [:<, :n, 1], 1, [:*, :n, [:fact, [:-, :n, 1]]]]]]],
        [:fact, 4]]).should eq(24)
+    @schemoid.eval(
+      [:cond,
+       [[:>, 1, 1], 1],
+       [[:>, 2, 1], 2],
+       [[:>, 3, 1], 3],
+       [:else, -1]]).should eq(2)
   end
 
   it "defineによってlambda式を定義できる" do
@@ -49,6 +55,16 @@ describe "Schemoid#evalが" do
     schemoid.eval([:three_or_five, 8]).should eq(0)
     schemoid.eval([:three_or_five, 9]).should eq(9)
     schemoid.eval([:three_or_five, 10]).should eq(10)
-    schemoid.eval([:letrec, [[:fact, [:lambda, [:n], [:if, [:<, :n, 3], 0, [:+, [:three_or_five, :n], [:fact, [:-, :n, 1]]]]]]], [:fact, 999]]).should eq(233168)
+    schemoid.eval([:letrec, [[:fact, [:lambda, [:n], [:if, [:<, :n, 3], 0, [:+, [:three_or_five, :n], [:fact, [:-, :n, 1]]]]]]], [:fact, 9]]).should eq(23)
+
+    schemoid = Schemoid.new
+    schemoid.eval([:define, [:three_or_five, :n],
+                   [:cond,
+                    [[:==, 0, [:%, :n, 3]], :n],
+                    [[:==, 0, [:%, :n, 5]], :n],
+                    [:else, 0]
+                   ]
+                  ])
+    schemoid.eval([:letrec, [[:fact, [:lambda, [:n], [:if, [:<, :n, 3], 0, [:+, [:three_or_five, :n], [:fact, [:-, :n, 1]]]]]]], [:fact, 9]]).should eq(23)
   end
 end
