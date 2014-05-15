@@ -12,3 +12,8 @@ puts schemoid = Schemoid.new.eval([[:lambda, [:x], [:+, :x, [[:lambda, [:x], :x]
 puts schemoid = Schemoid.new.eval([:let, [[:x, 3], [:y, 2]], [:+, :x, :y]]) # => 5
 puts schemoid = Schemoid.new.eval([:if, [:>, 3, 2], 1, 0]) # => 1
 ```
+
+* repl
+```
+ruby schemoid_repl.rb
+```
