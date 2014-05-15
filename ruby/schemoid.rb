@@ -56,6 +56,9 @@ class Schemoid
       elsif expression[0] == :cond
         if_expression = eval_cond(expression[1..-1])
         result = eval(if_expression, environment)
+      elsif expression[0] == :quote
+        result = car(cdr(expression))
+        p result
       else
         function  = eval(car(expression), environment)
         arguments = cdr(expression).map{|exp| eval(exp, environment)}

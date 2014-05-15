@@ -12,7 +12,7 @@ module SchemoidFunction
     :== => ->(a, b){a == b},
     :!= => ->(a, b){a != b},
     :nil => [],
-    :null? => ->(list){null?(list)},
+    :null? => ->(list){list == []},
     :cons => ->(a, b){[a] + b},
     :car => ->(list){list[0]},
     :cdr => ->(list){list[1..-1]},

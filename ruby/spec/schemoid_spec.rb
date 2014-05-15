@@ -71,5 +71,10 @@ describe "Schemoid#evalが" do
   it "parseによってSchemeのように書ける" do
     @schemoid.eval(@schemoid.parse('(+ 1 2)')).should eq(3)
     @schemoid.eval(@schemoid.parse('((lambda (x) (+ x 1)) 2)')).should eq(3)
+
+    schemoid = Schemoid.new
+    schemoid.eval(schemoid.parse('(define (length listt) (if (null? listt) 0 (+ (length (cdr listt)) 1)))'))
+    schemoid.eval(schemoid.parse('(length (list 1 2))')).should eq(2)
+    schemoid.eval(schemoid.parse('(length (quote (1 2 3)))')).should eq(3)
   end
 end
