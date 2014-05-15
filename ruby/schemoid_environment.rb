@@ -9,4 +9,10 @@ module SchemoidEnvironment
     env = environment.find{|env| env.key?(value)}
     env[value]
   end
+
+  def set_extend_environment!(parameters, arguments, environment)
+    parameters.zip(arguments).each do |parameter, argument|
+      environment[0][parameter] = argument
+    end
+  end
 end

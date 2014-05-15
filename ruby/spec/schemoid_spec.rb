@@ -18,5 +18,16 @@ describe "Schemoid#evalが" do
     @schemoid.eval([:let, [[:x, 3], [:y, 2]], [:+, :x, :y]]).should eq(5)
     @schemoid.eval([:if, [:>, 3, 2], 1, 0]).should eq(1)
     @schemoid.eval([:let, [[:x, 1], [:y, 1]], [:if, [:!=, :x, :y], 0, -1]]).should eq(-1)
+    @schemoid.eval([:let, [[:x, 2]], [:let, [[:fun, [:lambda, [], :x]]], [:let, [[:x, 1]], [:fun]]]]).should eq(2)
+    @schemoid.eval(
+      [:letrec,
+       [[:fact,
+         [:lambda, [:n], [:if, [:<, :n, 1], 1, [:*, :n, [:fact, [:-, :n, 1]]]]]]],
+       [:fact, 0]]).should eq(1)
+    @schemoid.eval(
+      [:letrec,
+       [[:fact,
+         [:lambda, [:n], [:if, [:<, :n, 1], 1, [:*, :n, [:fact, [:-, :n, 1]]]]]]],
+       [:fact, 4]]).should eq(24)
   end
 end

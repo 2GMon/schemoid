@@ -27,6 +27,9 @@ class Schemoid
       elsif expression[0] == :let
         lambda_expression = eval_let(expression)
         result = eval(lambda_expression, environment)
+      elsif expression[0] == :letrec
+        lambda_expression, new_environment = eval_letrec(expression, environment)
+        result = eval(lambda_expression, new_environment)
       elsif expression[0] == :if
         condition = eval(expression[1], environment)
         if condition

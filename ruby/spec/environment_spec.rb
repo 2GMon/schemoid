@@ -23,4 +23,14 @@ describe "SchemoidEnvironment" do
     @schemoid_environment.lookup_value(:x, [{:x => 2, :y => 3}, {:x => 1, :y => 0}]).should eq(2)
     @schemoid_environment.lookup_value(:y, [{:x => 2}, {:x => 1, :y => 0}]).should eq(0)
   end
+
+  it "set_extend_environment!は先頭の環境を上書きする" do
+    env = [{:x => 0}, {:x => 1, :y => 0}]
+    @schemoid_environment.set_extend_environment!([:x], [1], env)
+    env.should eq([{:x => 1}, {:x => 1, :y => 0}])
+
+    env = [{:x => 0, :y => 1}, {:z => 0}]
+    @schemoid_environment.set_extend_environment!([:x, :y], [1, 0], env)
+    env.should eq([{:x => 1, :y => 0}, {:z => 0}])
+  end
 end
