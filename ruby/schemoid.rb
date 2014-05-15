@@ -11,7 +11,11 @@ class Schemoid
   include SchemoidEnvironment
   include SchemoidEval
 
-  def eval(expression, environment = [])
+  def initialize
+    @environment = []
+  end
+
+  def eval(expression, environment = @environment)
     if !list?(expression)
       if immediate_value?(expression)
         result = expression
@@ -38,6 +42,17 @@ class Schemoid
           new_expression = expression[3]
         end
         result = eval(new_expression, environment)
+      elsif expression[0] == :define
+        if expression[1].is_a?(Array)
+          variable = car(expression[1])
+          parameter = cdr(expression[1])
+          body = expression[2]
+          value = [:lambda, parameter, body]
+        else
+          variable = expression[1]
+          value    = expression[2]
+        end
+        extend_environment!([variable], [eval(value, environment)], environment)
       else
         function  = eval(car(expression), environment)
         arguments = cdr(expression).map{|exp| eval(exp, environment)}

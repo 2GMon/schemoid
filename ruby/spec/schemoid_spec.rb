@@ -30,4 +30,12 @@ describe "Schemoid#evalが" do
          [:lambda, [:n], [:if, [:<, :n, 1], 1, [:*, :n, [:fact, [:-, :n, 1]]]]]]],
        [:fact, 4]]).should eq(24)
   end
+
+  it "defineによってlambda式を定義できる" do
+    schemoid = Schemoid.new
+    schemoid.eval([:define, :id, [:lambda, [:x], [:*, :x, 2]]])
+    schemoid.eval([:id, 3]).should eq(6)
+    schemoid.eval([:define, [:id2, :x], [:*, :x, :x]])
+    schemoid.eval([:id2, 2]).should eq(4)
+  end
 end
