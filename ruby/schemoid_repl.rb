@@ -45,7 +45,7 @@ class SchemoidRepl
     elsif expression.is_a?(Array)
       '(' + expression.map{|e| pp(e)}.join(', ') + ')'
     else
-      exp.to_s
+      expression.to_s
     end
   end
 end
